@@ -29,5 +29,5 @@ override.tf.json
 # example: *tfplan*
 .terraform.lock.hcl
 
-# Local backend configuration file
-configuration.local.tf
+# Local configuration files
+*.local.tfvars

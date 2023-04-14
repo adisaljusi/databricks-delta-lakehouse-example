@@ -1,0 +1,33 @@
+resource "azurerm_storage_account" "adls" {
+  name                     = "sa${local.prefix_clean}"
+  resource_group_name      = azurerm_resource_group.lakehouse.name
+  location                 = azurerm_resource_group.lakehouse.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+  is_hns_enabled           = true
+
+  enable_https_traffic_only       = true
+  public_network_access_enabled   = false
+  min_tls_version                 = "TLS1_2"
+  allow_nested_items_to_be_public = false
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
+
+resource "azurerm_role_assignment" "sp_sa_adls" {
+  scope                = azurerm_storage_account.adls.id
+  role_definition_name = "Storage Blob Data Owner"
+  principal_id         = data.azurerm_client_config.service_connection.object_id
+
+  depends_on = [
+    azurerm_storage_account.adls
+  ]
+}
