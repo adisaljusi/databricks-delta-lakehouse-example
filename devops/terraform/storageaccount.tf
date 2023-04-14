@@ -22,6 +22,12 @@ resource "azurerm_storage_account" "adls" {
   }
 }
 
+resource "azurerm_storage_container" "unity_catalog" {
+  name                  = "unitycatalog"
+  storage_account_name  = azurerm_storage_account.adls.name
+  container_access_type = "private"
+}
+
 resource "azurerm_role_assignment" "sp_sa_adls" {
   scope                = azurerm_storage_account.adls.id
   role_definition_name = "Storage Blob Data Owner"
@@ -30,4 +36,10 @@ resource "azurerm_role_assignment" "sp_sa_adls" {
   depends_on = [
     azurerm_storage_account.adls
   ]
+}
+
+resource "azurerm_role_assignment" "mi_unity_catalog" {
+  scope                = azurerm_storage_account.adls.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_databricks_access_connector.unity.identity[0].principal_id
 }
