@@ -19,3 +19,10 @@ provider "azurerm" {
   environment = "public"
 }
 
+provider "databricks" {
+
+}
+
+data "azurerm_resource_group" "infrastructure" {
+  name = var.resource_group_name
+}
