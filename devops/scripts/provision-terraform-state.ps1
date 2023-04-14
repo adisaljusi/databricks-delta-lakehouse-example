@@ -43,7 +43,7 @@ $storageAccount = az storage account list --resource-group $ResourceGroupName --
 if ($storageAccount.Length -eq '0')
 {
   az storage account create --name $StorageAccountName --resource-group $ResourceGroupName --sku $StorageAccountSku --allow-blob-public-access false --min-tls-version TLS1_2 --public-network-access "Enabled" --https-only true --only-show-errors
-  # az storage container create --name $ContainerName --account-name $StorageAccountName --public-access off --auth-mode login
+  az storage container create --name $ContainerName --account-name $StorageAccountName --auth-mode login
   Write-Host "Storage account $StorageAccountName has been created."
   Start-Sleep -Seconds 60 # Wait for the storage account to be ready and tags to be applied
 }
