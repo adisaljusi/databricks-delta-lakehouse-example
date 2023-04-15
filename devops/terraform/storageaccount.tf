@@ -6,8 +6,14 @@ resource "azurerm_storage_account" "adls" {
   account_replication_type = "GRS"
   is_hns_enabled           = true
 
-  enable_https_traffic_only       = true
-  public_network_access_enabled   = false
+  enable_https_traffic_only = true
+  /*
+    For the creation of storage account container, `public_network_acces_enabled` needs to be set to true (defaults to true).
+    Otherwise the Terraform plan cannot be applied successfully, if the agent is not in the same network. 
+    A workaround/viable solution is to temporarily enable public network access. After the plan command was applied, the storage account network settings to be reverted. 
+    j
+    # public_network_access_enabled   = false
+  */
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
@@ -26,6 +32,10 @@ resource "azurerm_storage_container" "unity_catalog" {
   name                  = "unitycatalog"
   storage_account_name  = azurerm_storage_account.adls.name
   container_access_type = "private"
+
+  depends_on = [
+    azurerm_storage_account.adls
+  ]
 }
 
 resource "azurerm_role_assignment" "sp_sa_adls" {
