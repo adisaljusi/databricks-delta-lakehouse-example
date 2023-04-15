@@ -39,3 +39,12 @@ resource "azurerm_resource_group" "lakehouse" {
     "environment" = var.environment
   }
 }
+
+resource "azurerm_resource_group" "secrets" {
+  name     = "rg-secrets-${var.environment}-${var.region}"
+  location = data.azurerm_resource_group.infrastructure.location
+
+  tags = {
+    "environment" = var.environment
+  }
+}

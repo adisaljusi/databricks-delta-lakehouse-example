@@ -17,3 +17,8 @@ variable "region" {
   type        = string
   description = "Name of the region where the resources are targeted for deployment"
 }
+
+variable "keyvault_sku" {
+  type        = string
+  description = "SKU for the Key Vault"
+}
