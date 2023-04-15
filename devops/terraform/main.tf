@@ -22,7 +22,7 @@ provider "azurerm" {
 provider "databricks" {
   host                        = azurerm_databricks_workspace.lakehouse.workspace_url
   azure_workspace_resource_id = azurerm_databricks_workspace.lakehouse.id
-  azure_use_msi               = true
+  # azure_use_msi               = true
 }
 
 data "azurerm_resource_group" "infrastructure" {
