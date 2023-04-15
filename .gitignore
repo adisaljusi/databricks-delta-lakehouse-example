@@ -31,3 +31,6 @@ override.tf.json
 
 # Local configuration files
 *.local.tfvars
+
+# Operating System
+.DS_Store
