@@ -15,18 +15,14 @@ data "databricks_spark_version" "latest" {
     azurerm_databricks_workspace.lakehouse
   ]
 }
-data "databricks_node_type" "smallest" {
-  local_disk = true
 
-  depends_on = [
-    azurerm_databricks_workspace.lakehouse
-  ]
-}
 
 resource "databricks_cluster" "unity_sql" {
   cluster_name            = "Cluster"
   spark_version           = data.databricks_spark_version.latest.id
-  node_type_id            = data.databricks_node_type.smallest.id
+  node_type_id            = "Standard_DS3_v2"
+  driver_node_type_id     = "Standard_DS3_v2"
+  runtime_engine          = "PHOTON"
   autotermination_minutes = 10
   enable_elastic_disk     = false
   num_workers             = 2
@@ -36,5 +32,9 @@ resource "databricks_cluster" "unity_sql" {
   azure_attributes {
     availability = "SPOT"
   }
+
+  depends_on = [
+    databricks_metastore_assignment.primary
+  ]
 }
 
