@@ -19,7 +19,7 @@ Sadly, this issue as of writing, can be remediated with an automated deployment.
 This requirement is described in this documentation https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/get-started#requirements
 
 ### Only account admins can craete Azure Managed Identity Storage Credentials
-Similarly to ["Only account admins can create metastores](#only-account-admin-can-create-metastores) a error message will appear. At the time of writing this I could not find a _official_ solution that succesfully resolves the issue. My assumption is that this relate to the metastore provisioning not being able to capture the changes at the time of creation. By rerunning the Terraform plan, the issue was resolved, but it leaves out open question, 
+Similarly to ["Only account admins can create metastores](#only-account-admin-can-create-metastores) a error message will appear. At the time of writing this I could not find a _official_ solution that succesfully resolves the issue. My assumption is that this relate to the metastore provisioning not being able to capture the changes at the time of creation. By rerunning the Terraform plan, the issue was resolved, but it leaves out open questions. Tt may certainly be the case that the metastore assignment needs to wait for a few seconds, until the `databricks_metastore_data_access` can be provisioned.  
 
 ```
 ╷
