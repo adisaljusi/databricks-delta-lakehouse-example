@@ -28,7 +28,7 @@ resource "databricks_cluster" "unity_sql" {
   num_workers             = 2
 
   data_security_mode = "NONE"
-  
+
   azure_attributes {
     availability = "SPOT"
   }

@@ -38,7 +38,7 @@ resource "azurerm_storage_container" "unity_catalog" {
   ]
 }
 
-resource "azurerm_role_assignment" "sp_sa_adls" {
+resource "azurerm_role_assignment" "sp_sa_ext_adls" {
   scope                = azurerm_storage_account.adls.id
   role_definition_name = "Storage Blob Data Owner"
   principal_id         = data.azurerm_client_config.service_connection.object_id
