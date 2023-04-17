@@ -22,3 +22,14 @@ variable "keyvault_sku" {
   type        = string
   description = "SKU for the Key Vault"
 }
+
+variable "sp_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Client secret of the service principal"
+}
+
+variable "secret_scope_keyvault_name" {
+  type        = string
+  description = "Secret scope name for the Databricks workspace"
+}

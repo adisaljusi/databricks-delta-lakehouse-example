@@ -43,7 +43,7 @@ resource "azurerm_role_assignment" "sp_sa_adls" {
   principal_id         = data.azurerm_client_config.service_connection.object_id
 
   depends_on = [
-    azurerm_storage_account.adls
+    azurerm_storage_account.ext_adls
   ]
 }
 
@@ -54,7 +54,7 @@ resource "azurerm_role_assignment" "sp_ext_storage" {
   principal_id         = azurerm_databricks_access_connector.external_access_connector.identity[0].principal_id
 
   depends_on = [
-    azurerm_storage_account.adls
+    azurerm_storage_account.ext_adls
   ]
 }
 
@@ -71,14 +71,6 @@ resource "databricks_storage_credential" "external" {
   ]
 }
 
-resource "databricks_grants" "external_creds" {
-  storage_credential = databricks_storage_credential.external.id
-  grant {
-    principal  = "Data Engineers"
-    privileges = ["CREATE_TABLE"]
-  }
-}
-
 resource "databricks_external_location" "some" {
   name = "external"
   url = format("abfss://%s@%s.dfs.core.windows.net",
@@ -89,7 +81,8 @@ resource "databricks_external_location" "some" {
   comment         = "Managed by TF"
 
   depends_on = [
-    databricks_metastore_assignment.primary
+    databricks_metastore_assignment.primary,
+    azurerm_role_assignment.sp_ext_storage
   ]
 }
 
