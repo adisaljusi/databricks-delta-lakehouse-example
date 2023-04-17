@@ -45,12 +45,3 @@ resource "azurerm_role_assignment" "azure_databricks" {
   role_definition_name = "Key Vault Secrets User"
   principal_id         = "e6963077-bbff-4ae0-b707-5ef0d6322a49"
 }
-
-resource "databricks_secret_scope" "dbw_scope" {
-  name = var.secret_scope_keyvault_name
-
-  keyvault_metadata {
-    resource_id = azurerm_key_vault.secrets.id
-    dns_name    = azurerm_key_vault.secrets.vault_uri
-  }
-}

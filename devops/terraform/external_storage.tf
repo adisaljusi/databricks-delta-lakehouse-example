@@ -71,7 +71,7 @@ resource "databricks_storage_credential" "external" {
   ]
 }
 
-resource "databricks_external_location" "some" {
+resource "databricks_external_location" "raw_datalake" {
   name = "external"
   url = format("abfss://%s@%s.dfs.core.windows.net",
     azurerm_storage_container.ext_storage.name,
@@ -87,7 +87,7 @@ resource "databricks_external_location" "some" {
 }
 
 resource "databricks_grants" "some" {
-  external_location = databricks_external_location.some.id
+  external_location = databricks_external_location.raw_datalake.id
 
   grant {
     principal  = "Data Engineers"
