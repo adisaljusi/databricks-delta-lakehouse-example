@@ -21,7 +21,6 @@ resource "databricks_cluster" "unity_sql" {
   cluster_name            = "Cluster"
   spark_version           = data.databricks_spark_version.latest.id
   node_type_id            = "Standard_DS3_v2"
-  driver_node_type_id     = "Standard_DS3_v2"
   runtime_engine          = "PHOTON"
   autotermination_minutes = 10
   enable_elastic_disk     = false
