@@ -49,7 +49,7 @@
 
 # COMMAND ----------
 
-DATA_DIR = "dbfs/mnt/raw/SoilSCAPE_1339"
+DATA_DIR = "/dbfs/mnt/raw/SoilSCAPE_1339"
 
 # COMMAND ----------
 
