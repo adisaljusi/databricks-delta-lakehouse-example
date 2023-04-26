@@ -26,7 +26,7 @@ resource "databricks_cluster" "unity_sql" {
   enable_elastic_disk     = false
   num_workers             = 2
 
-  data_security_mode = "NONE"
+  data_security_mode = "USER_ISOLATION"
 
   azure_attributes {
     availability = "SPOT"
